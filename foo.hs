@@ -25,46 +25,49 @@ pop (Push a s) = (a, s)
 push :: a -> Stack s -> Stack (a, Stack s)
 push a b = Push a b
 
+data State =
+  S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8
+
 data Intgr = Intgr
 data Star = Star
 data Plus = Plus
 data Exp = Exp
 data Term = Term
 
-type S1 = Stack ()
-type S2 a = Stack (Exp, a)
-type S3 a = Stack (Plus, Stack (Exp, a))
-type S4 a = Stack (Term, a)
-type S5 a = Stack (Term, a)
-type S6 a = Stack (Star, Stack (Term, a))
-type S7 a = Stack (Intgr, Stack (Star, Stack (Term, a)))
-type S8 a = Stack (Intgr, a)
+type S1Stack = Stack ()
+type S2Stack a = Stack (Exp, a)
+type S3Stack a = Stack (Plus, Stack (Exp, a))
+type S4Stack a = Stack (Term, a)
+type S5Stack a = Stack (Term, a)
+type S6Stack a = Stack (Star, Stack (Term, a))
+type S7Stack a = Stack (Intgr, Stack (Star, Stack (Term, a)))
+type S8Stack a = Stack (Intgr, a)
 
-s1tos2 :: S1 -> Stack (Exp, S1)
+s1tos2 :: S1Stack -> Stack (Exp, S1Stack)
 s1tos2 s = Push Exp s
 
-s2tos3 :: S2 (Stack a) -> Stack (Plus, S2 (Stack a))
+s2tos3 :: S2Stack (Stack a) -> Stack (Plus, S2Stack (Stack a))
 s2tos3 s = Push Plus s
 
-s3tos4 :: S3 (Stack a) -> Stack (Term, S3 (Stack a))
+s3tos4 :: S3Stack (Stack a) -> Stack (Term, S3Stack (Stack a))
 s3tos4 s = Push Term s
 
-s3tos8 :: S3 (Stack a) -> Stack (Intgr, S3 (Stack a))
+s3tos8 :: S3Stack (Stack a) -> Stack (Intgr, S3Stack (Stack a))
 s3tos8 s = Push Intgr s
 
-s4tos6 :: S4 (Stack a) -> Stack (Star, S4 (Stack a))
+s4tos6 :: S4Stack (Stack a) -> Stack (Star, S4Stack (Stack a))
 s4tos6 s = Push Star s
 
-s1tos5 :: S1 -> Stack (Term, S1)
+s1tos5 :: S1Stack -> Stack (Term, S1Stack)
 s1tos5 s = Push Term s
 
-s5tos6 :: S5 (Stack a) -> Stack (Star, S5 (Stack a))
+s5tos6 :: S5Stack (Stack a) -> Stack (Star, S5Stack (Stack a))
 s5tos6 s = Push Star s
 
-s6tos7 :: S6 (Stack a) -> Stack (Intgr, S6 (Stack a))
+s6tos7 :: S6Stack (Stack a) -> Stack (Intgr, S6Stack (Stack a))
 s6tos7 s = Push Intgr s
 
-s1tos8 :: S1 -> Stack (Intgr, S1)
+s1tos8 :: S1Stack -> Stack (Intgr, S1Stack)
 s1tos8 s = Push Intgr s
 
 r1 :: Stack( Term ,Stack( Plus ,Stack( Exp ,Stack a))) -> Stack a
