@@ -24,7 +24,7 @@ Any input of the form `# * # + #` would follow exactly this route through the PD
 
 It's reversed because the syntactically last procedure is applied first. If we ask GHCi for the type of this composition by prepending the previous line with `:t` we'll find that it is
 
-    :: S1 -> Stack ()
+    :: S1Stack -> Stack ()
 
 But S1 is really just `Stack ()`, the empty stack. As you can see the type system has figured out exactly what the stack should look like at the end of this computation. If any state shifted to a state with a stack that the destination cannot possibly handle, we get a static type error. Furthermore, no reduction can be applied to an invalid stack because the type checker would similarly deduce the error. This is how we statically prevent stack underflow.
 
