@@ -25,15 +25,18 @@ pop (Push a s) = (a, s)
 push :: a -> Stack s -> Stack (a, Stack s)
 push a b = Push a b
 
+-- a data type for the states of the PDA
 data State =
   S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8
 
+-- token data types
 data Intgr = Intgr
-data Star = Star
-data Plus = Plus
-data Exp = Exp
-data Term = Term
+data Star  = Star
+data Plus  = Plus
+data Exp   = Exp
+data Term  = Term
 
+-- semantic value stack
 type S1Stack = Stack ()
 type S2Stack a = Stack (Exp, a)
 type S3Stack a = Stack (Plus, Stack (Exp, a))
