@@ -93,3 +93,21 @@ r4 :: Stack( Intgr ,Stack a) -> Stack a
 r4 s =
   let (intgr,s1) = pop s
   in s1
+
+read :: (a) -> Stack -> State -> Boolean
+read Intgr:strm s S1 = read strm s1tos8(s) S8
+read Term:strm  s S1 = read strm s1tos5(s) S5
+read Exp:strm   s S1 = read strm s1tos2(s) S2
+read Plus:strm  s S2 = read strm s2tos3(s) S3
+read Term:strm  s S3 = read strm s3tos8(s) S8
+read Star:strm  s S4 = read strm s4tos6(s) S6
+read Star:strm  s S5 = read strm s5tos6(s) S6
+read Intgr:strm s S6 = read strm s6tos7(s) S7
+read strm       s S8 = let (target, stack) = r4(s)
+                       in read strm stack target
+read strm       s S7 = let (target, stack) = r3(s)
+                       in read strm stack target
+read strm       s S3 = let (target, stack) = r2(s)
+                       in read strm stack target
+read strm       s S4 = let (target, stack) = r1(s)
+                       in read strm stack target
